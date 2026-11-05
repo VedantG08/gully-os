@@ -1,0 +1,23 @@
+{
+  "name": "kaka",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync-knowledge.mjs",
+    "predev": "npm run sync",
+    "dev": "vite",
+    "prebuild": "npm run sync",
+    "build": "vite build",
+    "preview": "vite preview",
+    "sam:build": "npm run sync && sam build"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.2.1",
+    "vite": "^8.3.6"
+  }
+}

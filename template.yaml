@@ -1,0 +1,103 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: GULLY//OS v2 - Kaka backend (API Gateway + Lambda + Bedrock)
+
+Parameters:
+  ModelId:
+    Type: String
+    Description: Bedrock model ID or inference-profile ID shown in your console
+    Default: us.amazon.nova-lite-v1:0
+  AllowedOrigin:
+    Type: String
+    Description: Amplify site origin, no trailing slash
+    Default: http://localhost:5173
+  AlertEmail:
+    Type: String
+    Description: Email for budget and error alerts
+  AiDisabled:
+    Type: String
+    AllowedValues: ["0", "1"]
+    Default: "0"
+    Description: Set to 1 to switch AI off (kill switch)
+
+Resources:
+  KakaApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: [!Ref AllowedOrigin, "http://localhost:5173"]
+        AllowMethods: [POST, OPTIONS]
+        AllowHeaders: [content-type]
+        MaxAge: 600
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 10
+        ThrottlingRateLimit: 5
+
+  KakaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: backend/kaka/
+      Handler: index.handler
+      Runtime: nodejs24.x
+      Architectures: [arm64]
+      MemorySize: 256
+      Timeout: 15
+      ReservedConcurrentExecutions: 5
+      Environment:
+        Variables:
+          MODEL_ID: !Ref ModelId
+          AI_DISABLED: !Ref AiDisabled
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: [bedrock:InvokeModel]
+              Resource:
+                - !Sub arn:${AWS::Partition}:bedrock:*::foundation-model/*
+                - !Sub arn:${AWS::Partition}:bedrock:*:${AWS::AccountId}:inference-profile/*
+      Events:
+        Kaka:
+          Type: HttpApi
+          Properties: { ApiId: !Ref KakaApi, Path: /kaka, Method: POST }
+
+  KakaLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${KakaFunction}
+      RetentionInDays: 14
+
+  AlertTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription: [{ Protocol: email, Endpoint: !Ref AlertEmail }]
+
+  ErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Kaka Lambda errors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions: [{ Name: FunctionName, Value: !Ref KakaFunction }]
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions: [!Ref AlertTopic]
+
+  MonthlyBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit: { Amount: 5, Unit: USD }
+      NotificationsWithSubscribers:
+        - Notification: { NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 80, ThresholdType: PERCENTAGE }
+          Subscribers: [{ SubscriptionType: EMAIL, Address: !Ref AlertEmail }]
+
+Outputs:
+  KakaApiUrl:
+    Description: Put this in Amplify env var VITE_KAKA_API
+    Value: !Sub https://${KakaApi}.execute-api.${AWS::Region}.amazonaws.com/kaka

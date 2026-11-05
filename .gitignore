@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.aws-sam/
+/samconfig.toml
+
+# Local environment and AWS credentials
+.env
+.env.*
+!.env.example
+.aws/
+**/.aws/
+credentials
+**/credentials
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Generated from the canonical root knowledge.json
+/src/data/knowledge.json
+/backend/kaka/knowledge.json

@@ -1,0 +1,73 @@
+{
+  "_schema": "Edit ONLY this file. `npm run sync` copies it to src/data and backend/kaka. Replace every TODO with real facts; Kaka must never claim more than is written here.",
+  "profile": {
+    "name": "Vedant Gaikwad",
+    "role": "AI/ML Developer · UN Millennium Fellow · Published Researcher",
+    "tagline": "I build agentic AI systems that solve real problems — from courtrooms to classrooms.",
+    "contact": { "email": "vedantgaikwad0808@gmail.com", "github": "https://github.com/VedantG08", "linkedin": "https://linkedin.com/in/vedant-gaikwad" }
+  },
+  "about": {
+    "bio": "Final-year AI & Data Science student at Late G.N. Sapkal College of Engineering, Nashik. I ship production-grade RAG pipelines, agentic AI tools, and full-stack apps. UN Millennium Fellow (Class of 2025) with two published research papers.",
+    "marathiLine": "नाशिकचा पोरगा, कोडिंग करतो, चहा पितो, AI बनवतो."
+  },
+  "skills": [
+    { "id": "rag", "name": "RAG", "proof": "Built a two-tier legal RAG system over 761 statute chunks with pgvector and Gemini 2.5 Flash, achieving zero-hallucination citation grounding for Indian law." },
+    { "id": "agents", "name": "Agentic AI", "proof": "Designed Kaka — an agentic portfolio assistant on AWS Bedrock that reads my profile, answers visitors, and drives the UI with tool-use actions." },
+    { "id": "aws", "name": "AWS", "proof": "Deployed GULLY//OS on Amplify + API Gateway + Lambda + Bedrock with a $5 budget alarm, rate limiting, and a kill switch." },
+    { "id": "cv", "name": "Computer Vision", "proof": "Built Sensei — real-time multi-face emotion analysis at 30fps using ONNX Runtime with HSEmotion and DeepFace dual-model verification." },
+    { "id": "fullstack", "name": "Full-Stack", "proof": "Ship production apps with Next.js, React, Flask, Supabase, and Python FastAPI — from frontend to deployment." }
+  ],
+  "projects": [
+    {
+      "id": "gully-os",
+      "title": "GULLY//OS — Kaka's Tapri",
+      "problem": "Portfolios are static and boring. Recruiters skim, developers bounce.",
+      "built": "A gully-themed portfolio with Kaka, an AI chai-wala powered by AWS Bedrock who answers visitor questions in Hinglish and drives the UI — opening projects, scrolling sections — all through agentic tool use.",
+      "role": "Solo — designed the concept, built the React frontend, Lambda backend, and SAM infrastructure.",
+      "stack": ["React", "Vite", "AWS Lambda", "API Gateway", "Bedrock", "SAM", "Amplify"],
+      "status": "shipped",
+      "links": { "repo": "https://github.com/VedantG08/gully-os", "demo": "" }
+    },
+    {
+      "id": "sensei",
+      "title": "Sensei — Emotion & Engagement Analyzer",
+      "problem": "Online educators can't see if students are engaged or lost behind their screens.",
+      "built": "A real-time multi-face emotion and engagement analysis tool using ONNX Runtime (HSEmotion/EfficientNet-B0) with DeepFace fallback, streaming analytics at 30fps over Flask + WebSockets.",
+      "role": "Solo — built during AI fellowship, aligned with UN SDG 4 (Quality Education).",
+      "stack": ["Python", "Flask", "ONNX Runtime", "DeepFace", "OpenCV", "WebSockets"],
+      "status": "shipped",
+      "links": { "repo": "https://github.com/VedantG08/Sensei", "demo": "" }
+    },
+    {
+      "id": "lawris",
+      "title": "Lawris — Legal Intelligence Platform",
+      "problem": "Indian lawyers waste hours searching through statutes and drafting standard legal documents manually.",
+      "built": "A two-tier RAG platform over 761 statute chunks (BNS, BNSS, CPC, POCSO, Supreme Court judgments) with Gemini 2.5 Flash for streaming document drafting, zero-hallucination citation grounding linked to indiacode.nic.in, and a BNSS §187(3) deadline engine.",
+      "role": "Lead developer — architecture, RAG pipeline, and deployment.",
+      "stack": ["Next.js 14", "Supabase", "pgvector", "Gemini API", "Vercel"],
+      "status": "shipped",
+      "links": { "repo": "https://github.com/VedantG08/project-mayhem", "demo": "" }
+    },
+    {
+      "id": "safar-ai",
+      "title": "Safar AI — AI Travel Planner",
+      "problem": "Planning multi-day trips across Indian destinations is time-consuming and generic.",
+      "built": "An AI travel planner that generates structured day-wise itineraries with budget breakdowns using Gemini API, with conversational replanning agents that adjust specific trip parts without rebuilding the whole schedule.",
+      "role": "Co-author — published in IJRASET, Volume 14, October 2026.",
+      "stack": ["Next.js", "React", "Python", "FastAPI", "Gemini API", "Google Maps"],
+      "status": "shipped",
+      "links": { "repo": "", "demo": "" }
+    }
+  ],
+  "fallback": {
+    "default": "Arre, network ka locha hai. Chips dabaa, main wahi se bataunga.",
+    "chips": [
+      { "id": "recruiter", "label": "I'm a recruiter", "keywords": ["hire", "recruit", "job", "intern"],
+        "reply": "Vedant ships production AI — built a legal RAG with zero-hallucination citations, an emotion analyzer for classrooms, and this portfolio's AI backend on AWS. Two published papers, UN Millennium Fellow. Check his projects below.", "actions": [{ "type": "scroll_to", "zone": "projects" }] },
+      { "id": "developer", "label": "I'm a developer", "keywords": ["stack", "code", "built", "tech"],
+        "reply": "React + Vite frontend, Lambda + Bedrock backend with tool-use, SAM infra with $5 budget cap. The RAG pipeline uses pgvector and Gemini. Click Sensei below to see the ONNX + Flask + WebSocket real-time vision stack.", "actions": [{ "type": "open_project", "id": "sensei" }] },
+      { "id": "browsing", "label": "Just browsing", "keywords": ["who", "about", "hi", "hello", "namaste"],
+        "reply": "Namaste! Main Vedant hoon, Nashik se. AI banata hoon jo kaam aata hai — courtrooms se classrooms tak. Chai piyo, projects dekho, aur Kaka se kuch bhi poocho!", "actions": [{ "type": "scroll_to", "zone": "about" }] }
+    ]
+  }
+}

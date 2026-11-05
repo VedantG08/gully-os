@@ -1,0 +1,9 @@
+{
+  "name": "kaka",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1162.0"
+  }
+}
