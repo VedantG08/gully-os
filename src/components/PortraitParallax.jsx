@@ -92,7 +92,7 @@ export default function PortraitParallax({ offsets, flicker }) {
           />
           <img
             src={portraitImg}
-            alt="Vedant Gaikwad, AI/ML Developer wearing square sunglasses and grey blazer holding chai"
+            alt="Vedant Gaikwad, AI/ML developer in a grey suit and square sunglasses"
             className="portrait-cutout"
             width="900"
             height="1086"

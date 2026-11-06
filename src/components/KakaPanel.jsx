@@ -75,18 +75,21 @@ export default function KakaPanel({ kb, open, setOpen, ui }) {
     <AnimatePresence mode="wait">
       {!open ? (
         <div className="kaka-fab-wrap">
+          <p className="kaka-hint" aria-hidden="true">
+            Aao, chai piyo
+          </p>
           <motion.button
             key="fab"
             ref={fabRef}
             className="kaka-fab"
             onClick={() => setOpen(true)}
-            aria-label="Ask Kaka, the AI chai-wala"
-            initial={reduced ? false : { opacity: 0, y: 18, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            aria-label="Ask Kaka, the AI chai-wala. Hint: tap this button."
+            initial={reduced ? false : { opacity: 0, y: 18, scale: 0.9, rotate: -8 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: -6 }}
             exit={reduced ? undefined : { opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 420, damping: 20 }}
           >
-            ASK KAKA <ChaiGlass />
+            <ChaiGlass className="chai-glass-icon" /> ASK KAKA
           </motion.button>
         </div>
       ) : (
