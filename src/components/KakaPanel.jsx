@@ -4,6 +4,7 @@ import { askKaka, fallbackAnswer } from "../lib/kaka.js";
 import { applyActions } from "../lib/actions.js";
 import { useReducedMotion } from "../lib/motionPrefs.js";
 import kakaAvatar from "../assets/kaka.webp";
+import ChaiGlass from "./ChaiGlass.jsx";
 
 export default function KakaPanel({ kb, open, setOpen, ui }) {
   const [msgs, setMsgs] = useState([{ role: "assistant", text: "Aao, chai piyo. Kya jaanna hai? Chips dabaa, ya About / Skills / Projects pe jao." }]);
@@ -74,21 +75,18 @@ export default function KakaPanel({ kb, open, setOpen, ui }) {
     <AnimatePresence mode="wait">
       {!open ? (
         <div className="kaka-fab-wrap">
-          <p className="kaka-hint" aria-hidden="true">
-            Ask Kaka <span className="kaka-hint-arrow">↓</span>
-          </p>
           <motion.button
             key="fab"
             ref={fabRef}
             className="kaka-fab"
             onClick={() => setOpen(true)}
-            aria-label="Ask Kaka, the AI chai-wala. Hint: tap this button."
+            aria-label="Ask Kaka, the AI chai-wala"
             initial={reduced ? false : { opacity: 0, y: 18, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? undefined : { opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 420, damping: 20 }}
           >
-            <span className="steam" aria-hidden="true">☕</span> ASK KAKA
+            ASK KAKA <ChaiGlass />
           </motion.button>
         </div>
       ) : (
