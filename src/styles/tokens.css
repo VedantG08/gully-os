@@ -9,6 +9,9 @@
   --ink: #1d1a16;
   --font-display: "Rubik Mono One", Impact, sans-serif;
   --font-body: "Hind", system-ui, sans-serif;
+  --font-script: "Kalam", cursive, sans-serif;
+  --font-brush: "Permanent Marker", Impact, cursive, sans-serif;
+  --font-mono: "Courier Prime", monospace, monospace;
   --step-0: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
   --step-1: clamp(1.25rem, 1.1rem + 0.8vw, 1.75rem);
   --step-2: clamp(2rem, 1.4rem + 3vw, 4rem);
