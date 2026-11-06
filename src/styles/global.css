@@ -50,3 +50,24 @@ button{font:inherit;cursor:pointer}
 .kaka form{display:flex;gap:.4rem;padding:.7rem;border-top:3px solid var(--ink)}
 .kaka input{flex:1;padding:.5rem;border:2px solid var(--ink);border-radius:var(--radius);font:inherit}
 .sr{position:absolute;left:-9999px}
+
+/* Night Neon Gully Hero */
+.hero-neon{position:relative;max-width:none;min-height:calc(100dvh - var(--nav-h));display:grid;grid-template-columns:1.1fr .9fr;align-items:end;overflow:hidden;isolation:isolate;padding:0 var(--space)}
+.neon-bg{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(23,22,26,.5),var(--asphalt) 95%),url(../assets/gully-bg.webp) center/cover}
+.neon-sign{position:absolute;top:10%;left:var(--space);font-family:var(--font-display);font-size:clamp(1rem,2.2vw,1.6rem);letter-spacing:.15em;color:#ffe1bf;text-shadow:0 0 6px var(--neon-orange),0 0 18px var(--neon-orange),0 0 42px var(--neon-pink);animation:flicker 6s infinite}
+@keyframes flicker{0%,18%,22%,62%,64%,100%{opacity:1}20%,63%{opacity:.5}}
+.hero-copy{align-self:center;padding-block:4rem;z-index:2;display:flex;flex-direction:column;gap:1.1rem}
+.eyebrow{color:var(--neon-teal);letter-spacing:.12em;font-size:.9rem}
+.hero-copy h1 span{display:block}
+.hero-copy h1 span:last-child{color:transparent;-webkit-text-stroke:2px var(--neon-orange);text-shadow:0 0 28px rgba(255,138,43,.5)}
+.cta{display:flex;flex-wrap:wrap;gap:.8rem}
+.btn.ghost{background:transparent;color:var(--paper);border:2px solid var(--neon-pink)}
+.btn.ghost:hover{background:var(--neon-pink)}
+.hero-portrait{justify-self:end;align-self:end;width:min(100%,520px);height:auto;filter:drop-shadow(-16px 0 28px rgba(255,138,43,.45)) drop-shadow(16px 0 28px rgba(47,209,197,.35))}
+.wet{position:absolute;left:0;right:0;bottom:0;height:18%;z-index:-1;background:linear-gradient(180deg,transparent,rgba(255,138,43,.2));mix-blend-mode:screen}
+@media(max-width:800px){
+  .hero-neon{grid-template-columns:1fr;padding-top:1.5rem}
+  .hero-portrait{order:-1;justify-self:center;width:min(78%,340px)}
+  .hero-copy{margin-top:-3rem;padding-block:0 3rem}
+  .neon-sign{top:4%}
+}

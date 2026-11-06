@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { askKaka, fallbackAnswer } from "../lib/kaka.js";
 import { applyActions } from "../lib/actions.js";
+import kakaAvatar from "../assets/kaka.webp";
 
 export default function KakaPanel({ kb, open, setOpen, ui }) {
   const [msgs, setMsgs] = useState([{ role: "assistant", text: "Aao, chai piyo. Kya jaanna hai?" }]);
@@ -62,7 +63,13 @@ export default function KakaPanel({ kb, open, setOpen, ui }) {
 
   return (
     <div ref={panelRef} className="kaka" role="dialog" aria-modal="true" aria-label="Chat with Kaka">
-      <header>Kaka's Tapri <button className="btn" onClick={() => setOpen(false)} aria-label="Close chat">✕</button></header>
+      <header>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+          <img src={kakaAvatar} alt="Kaka" style={{ width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover", border: "2px solid var(--ink)" }} />
+          <span>Kaka's Tapri</span>
+        </div>
+        <button className="btn" onClick={() => setOpen(false)} aria-label="Close chat">✕</button>
+      </header>
       <div className="log" ref={logRef} aria-live="polite">
         {msgs.map((m, i) => <p key={i} className={`msg ${m.role === "user" ? "me" : "kaka-m"}`}>{m.text}</p>)}
         {busy && <p className="msg kaka-m">Kaka chai chhaan raha hai…</p>}
