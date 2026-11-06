@@ -63,6 +63,16 @@ npm run dev          # Syncs knowledge.json → starts Vite at localhost:5173
 
 Kaka works in **offline fallback mode** until you set `VITE_KAKA_API` in `.env.local`.
 
+## Amplify Hosting
+
+`VITE_KAKA_API` is inlined at **build** time. In the Amplify console set it under **Hosting → Environment variables**, then trigger a new build. If it is missing, Kaka still answers from `knowledge.json` fallback chips — the site stays navigable.
+
+SPA rewrite (Amplify console → **Rewrites and redirects**) so a refresh never 404s:
+
+| Source | Target | Type |
+|---|---|---|
+| `</^[^.]+$|\.(?!(css|gif|ico|jpg|jpeg|js|png|txt|svg|woff|woff2|webp|map|json)$)([^.]+$)/>` | `/index.html` | `200 (Rewrite)` |
+
 ## ☁️ Deploy Backend
 
 ```bash

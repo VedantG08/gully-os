@@ -60,7 +60,11 @@
     }
   ],
   "fallback": {
-    "default": "Arre, network ka locha hai. Chips dabaa, main wahi se bataunga.",
+    "default": "Arre, network ka locha hai. Chips dabaa, main wahi se bataunga. Site chal rahi hai — About, Skills, Projects neeche hain.",
+    "timeout": "Kettle ubal raha hai, AWS thoda slow hai. Chips se poochho, ya khud scroll karo — About, Skills, Projects sab open hain.",
+    "rate": "Arre bhai, line lamba ho gaya (rate limit). Chai thandi mat hone dena — chips dabaa, portfolio khud ghoom sakte ho.",
+    "offline": "Aaj stall generator pe chal raha hai — AI line band hai. Chips se poochho, ya neeche About, Skills aur Projects dekho.",
+    "down": "Kaka ka chulha band hai abhi (API down). Tension nahi — chips dabaa, ya nav se ghoom lo. Kuch toot nahi raha.",
     "chips": [
       { "id": "recruiter", "label": "I'm a recruiter", "keywords": ["hire", "recruit", "job", "intern"],
         "reply": "Vedant ships production AI — built a legal RAG with zero-hallucination citations, an emotion analyzer for classrooms, and this portfolio's AI backend on AWS. Two published papers, UN Millennium Fellow. Check his projects below.", "actions": [{ "type": "scroll_to", "zone": "projects" }] },

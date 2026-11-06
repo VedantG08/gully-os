@@ -5,14 +5,20 @@ import Steam from "./Steam.jsx";
 import NeonSign from "./NeonSign.jsx";
 import PortraitParallax from "./PortraitParallax.jsx";
 import IntroShutter from "./IntroShutter.jsx";
+import SplitHeadline from "./SplitHeadline.jsx";
+import Magnetic from "./Magnetic.jsx";
+import AmbientFX from "./AmbientFX.jsx";
 import { useParallax } from "../hooks/useParallax.js";
 import { useNeonFlicker } from "../hooks/useNeonFlicker.js";
+import { useScrollReveal } from "../hooks/useScrollReveal.js";
 
 export default function Hero({ kb, onAsk }) {
   const { profile, about } = kb;
   const stageRef = useRef(null);
+  const boardRef = useRef(null);
   const offsets = useParallax(stageRef);
   const flicker = useNeonFlicker();
+  useScrollReveal(boardRef);
 
   return (
     <>
@@ -20,7 +26,6 @@ export default function Hero({ kb, onAsk }) {
 
       <section id="top" className="stage-section" ref={stageRef}>
         <div className="stage">
-          {/* Layer 1: Background Plate with subtle parallax */}
           <div
             className="stage-bg-plate"
             style={{
@@ -30,7 +35,6 @@ export default function Hero({ kb, onAsk }) {
             aria-hidden="true"
           />
 
-          {/* Wet street reflective shimmer overlay modulated by neon flicker */}
           <div
             className="wet-street-shimmer"
             style={{
@@ -39,25 +43,20 @@ export default function Hero({ kb, onAsk }) {
             aria-hidden="true"
           />
 
-          {/* Layer 2: Atmosphere - Canvas Rain */}
           <RainCanvas containerRef={stageRef} />
-
-          {/* Layer 3: Kettle Steam rising from counter */}
+          <AmbientFX />
           <Steam className="steam-kettle" />
-
-          {/* Layer 4: Interactive Living Neon Sign ("KAKA'S TAPRI") */}
           <NeonSign flicker={flicker} onAsk={onAsk} />
 
-          {/* Layer 5: Headline, Copy & Actions */}
           <div className="hero-content-layer">
             <div className="hero-copy-box">
               <div className="hero-intro-script">Hey, I'm</div>
 
-              <h1 className="hero-name-brush">
-                <span>VEDANT</span>
-                <span>GAIKWAD</span>
-                <span className="brush-underline" aria-hidden="true" />
-              </h1>
+              <SplitHeadline
+                className="hero-name-brush"
+                label="Vedant Gaikwad"
+                lines={["VEDANT", "GAIKWAD"]}
+              />
 
               <div className="ai-builder-badge">
                 <span className="badge-text">the AI builder</span>
@@ -67,26 +66,35 @@ export default function Hero({ kb, onAsk }) {
                 RAG · Agentic AI · Computer Vision · AWS
               </p>
 
+              <nav className="hero-jump" aria-label="Required sections">
+                <a href="#about">About Me</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+              </nav>
+
               <div className="hero-actions-row">
-                <a className="btn btn-dashed" href="#projects">
-                  View Work →
-                </a>
-                <button
-                  className="btn btn-ask-kaka-hero"
-                  onClick={onAsk}
-                  aria-label="Ask Kaka, the AI chai-wala"
-                >
-                  <span className="chai-icon" aria-hidden="true">☕</span> ASK KAKA
-                </button>
+                <Magnetic>
+                  <a className="btn btn-dashed" href="#projects">
+                    View Work →
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <button
+                    className="btn btn-ask-kaka-hero"
+                    onClick={onAsk}
+                    aria-label="Ask Kaka, the AI chai-wala"
+                  >
+                    <span className="chai-icon" aria-hidden="true">☕</span> ASK KAKA
+                  </button>
+                </Magnetic>
               </div>
 
-              {/* Social icons bottom-left */}
               <div className="hero-social-links" aria-label="Social profiles">
                 {profile.contact?.github && (
                   <a
                     href={profile.contact.github}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     aria-label="GitHub profile"
                     className="social-pill"
                   >
@@ -100,7 +108,7 @@ export default function Hero({ kb, onAsk }) {
                   <a
                     href={profile.contact.linkedin}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     aria-label="LinkedIn profile"
                     className="social-pill"
                   >
@@ -126,17 +134,14 @@ export default function Hero({ kb, onAsk }) {
             </div>
           </div>
 
-          {/* Layer 6 & 7: Portrait with 3D Tilt & Foreground Chai Glass */}
           <PortraitParallax offsets={offsets} flicker={flicker} />
-
-          {/* Layer 8: Vignette and Film Grain Texture */}
           <div className="vignette-grain-overlay" aria-hidden="true" />
         </div>
       </section>
 
-      {/* About Section Board */}
       <section id="about" className="about-notice-board">
-        <div className="board">
+        <h2>About Me</h2>
+        <div className="board" ref={boardRef}>
           <p><b>{profile.role}</b></p>
           <p>{about.bio}</p>
           <p className="mr" lang="mr">{about.marathiLine}</p>

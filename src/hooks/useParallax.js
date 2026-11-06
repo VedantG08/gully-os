@@ -14,7 +14,9 @@ export function useParallax(containerRef) {
     isReducedMotion.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    if (isReducedMotion.current) return;
+    const saveData = Boolean(navigator.connection?.saveData);
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    if (isReducedMotion.current || saveData || coarse) return;
 
     let animId;
     const lerp = (start, end, factor) => start + (end - start) * factor;

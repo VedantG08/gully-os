@@ -4,7 +4,10 @@ export default function RainCanvas({ containerRef }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+    const saveData = Boolean(navigator.connection?.saveData);
+    if (reduced || coarse || saveData || window.innerWidth < 800) {
       return;
     }
 

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import kakaImg from "../assets/kaka.webp";
+import { prefersReducedMotion } from "../lib/motionPrefs.js";
 
 export default function NeonSign({ flicker, onAsk }) {
   const {
@@ -12,15 +14,12 @@ export default function NeonSign({ flicker, onAsk }) {
     triggerPowerSurge,
   } = flicker;
 
-  const [showHint, setShowHint] = useState(false);
+  const [showHint, setShowHint] = useState(true);
   const [kakaPopping, setKakaPopping] = useState(false);
   const [steamPuff, setSteamPuff] = useState(false);
 
-  // Idle tooltip: fades in once after 4s
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowHint(true);
-    }, 4000);
+    const timer = setTimeout(() => setShowHint(true), 400);
     return () => clearTimeout(timer);
   }, []);
 
@@ -112,13 +111,19 @@ export default function NeonSign({ flicker, onAsk }) {
       {/* Kaka pop-up animation */}
       {kakaPopping && (
         <div className="kaka-popup" aria-live="polite">
-          <div className="kaka-speech-bubble">
+          <motion.div
+            className="kaka-speech-bubble"
+            initial={prefersReducedMotion() ? false : { opacity: 0, scale: 0.6, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 460, damping: 16 }}
+          >
             Aao, chai piyo! ☕
-          </div>
+          </motion.div>
           <img
             src={kakaImg}
             alt="Kaka the chai-wala"
             className="kaka-popup-img"
+            loading="lazy"
           />
         </div>
       )}

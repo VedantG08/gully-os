@@ -1,0 +1,465 @@
+/* GULLY//OS motion layer — tapri / sticker-zine. Does not replace tokens. */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.magnetic {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Custom cursor — desktop fine pointer only */
+.custom-cursor {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .custom-cursor {
+    display: block;
+  }
+  html.has-custom-cursor,
+  html.has-custom-cursor body {
+    cursor: none;
+  }
+  html.has-custom-cursor a,
+  html.has-custom-cursor button {
+    cursor: none;
+  }
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor select {
+    cursor: text;
+  }
+}
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 200;
+  border-radius: 50%;
+  transform: translate3d(-100px, -100px, 0);
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: var(--chai);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+.cursor-ring {
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 2px solid var(--sticker);
+  background: transparent;
+  opacity: 0.55;
+}
+
+/* Hero type */
+.headline-stack {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.headline-line {
+  display: block;
+}
+.char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+.hero-name-brush {
+  position: relative;
+}
+.print-texture {
+  position: absolute;
+  inset: -4% -2% 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: multiply;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(29, 26, 22, 0.12) 2px 3px),
+    radial-gradient(circle at 18% 40%, rgba(29, 26, 22, 0.18) 0 1px, transparent 2px),
+    radial-gradient(circle at 72% 60%, rgba(29, 26, 22, 0.14) 0 1px, transparent 2px);
+  background-size: auto, 7px 7px, 9px 9px;
+}
+
+/* Portrait offset print shadows */
+.portrait-entrance {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.portrait-wrapper {
+  animation: none;
+}
+.portrait-entrance.is-settled {
+  animation: breatheFloat 5s ease-in-out infinite;
+}
+.portrait-offset-shadow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: 100%;
+  max-height: 86vh;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+}
+.portrait-offset-shadow.chai {
+  filter: brightness(0) sepia(1) saturate(14) hue-rotate(-8deg);
+  opacity: 0.55;
+  transform: translate(26px, 16px);
+}
+.portrait-offset-shadow.pink {
+  filter: brightness(0) invert(0.2) sepia(1) saturate(20) hue-rotate(-40deg);
+  opacity: 0.42;
+  transform: translate(-22px, 20px);
+}
+.portrait-cutout {
+  position: relative;
+  z-index: 1;
+}
+
+/* Stickers */
+.sticker {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  transform: none;
+  perspective: 500px;
+}
+.sticker-face {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  background: var(--sticker);
+  color: #fff;
+  border: 3px dashed #fff;
+  padding: 0.65rem 1rem;
+  min-height: 44px;
+  font-size: 0.875rem;
+  border-radius: 999px;
+  transform-origin: center;
+  box-shadow: 2px 3px 0 rgba(23, 22, 26, 0.35);
+  transition: box-shadow 0.2s ease;
+}
+.sticker.is-selected .sticker-face {
+  background: var(--chai);
+  color: var(--ink);
+  border-style: solid;
+  box-shadow: 4px 6px 0 rgba(23, 22, 26, 0.25);
+}
+.sticker-peel {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 50%, transparent 52%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  opacity: 0.55;
+  pointer-events: none;
+  transform-origin: top right;
+}
+.sticker.is-selected .sticker-peel {
+  width: 22px;
+  height: 22px;
+  opacity: 1;
+  transform: rotate(-8deg);
+  filter: drop-shadow(-1px 1px 0 rgba(29, 26, 22, 0.25));
+}
+
+/* Project shutter / shop art */
+.shop {
+  min-height: 260px;
+}
+.shop-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 70%, rgba(233, 146, 59, 0.18) 0 42px, transparent 43px),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(63, 111, 115, 0.06) 18px 19px),
+    var(--paper);
+}
+.shop-stamp {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1.2rem;
+  font-family: var(--font-brush);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--shutter-dark);
+  opacity: 0.35;
+  transform: rotate(-6deg);
+  letter-spacing: 0.04em;
+}
+.chai-ring {
+  position: absolute;
+  right: 12%;
+  top: 28%;
+  width: 72px;
+  height: 72px;
+  border: 6px solid rgba(233, 146, 59, 0.28);
+  border-radius: 50%;
+  transform: rotate(12deg);
+}
+.poster {
+  position: relative;
+  z-index: 1;
+  visibility: hidden;
+}
+.shop.open .poster {
+  visibility: visible;
+}
+.shutter {
+  z-index: 2;
+  transition: filter 0.2s ease, color 0.2s ease;
+  will-change: transform;
+}
+.shutter-bar {
+  position: absolute;
+  left: 50%;
+  bottom: 0.8rem;
+  width: 86px;
+  height: 10px;
+  margin-left: -43px;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: inset 0 1px 0 rgba(243, 234, 211, 0.35);
+}
+@media (hover: hover) and (pointer: fine) {
+  .shop:not(.open) .shutter:hover {
+    filter: brightness(1.08);
+  }
+}
+.shop.open .shutter {
+  transform: none;
+}
+
+/* Street marquee */
+.street-marquee {
+  overflow: hidden;
+  background: var(--shutter);
+  border-top: 4px solid var(--chai);
+  border-bottom: 4px solid var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  max-width: none;
+  width: 100%;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: streetMarquee 32s linear infinite;
+}
+.marquee-copy {
+  padding: 0.55rem 0;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+@keyframes streetMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Torn paper */
+.torn-edge {
+  width: 100%;
+  line-height: 0;
+  pointer-events: none;
+  margin: 0;
+}
+.torn-edge svg {
+  display: block;
+  width: 100%;
+  height: 28px;
+}
+.torn-edge.is-flipped {
+  transform: scaleY(-1);
+}
+
+/* Ambient bulb + dust */
+.hanging-bulb {
+  position: absolute;
+  top: 0;
+  left: 52%;
+  width: 28px;
+  height: 92px;
+  z-index: 7;
+  pointer-events: none;
+  transform-origin: top center;
+  animation: bulbSway 4.6s ease-in-out infinite;
+}
+.bulb-cord {
+  display: block;
+  width: 2px;
+  height: 48px;
+  margin: 0 auto;
+  background: #2a2722;
+}
+.bulb {
+  display: block;
+  width: 18px;
+  height: 22px;
+  margin: -2px auto 0;
+  background: radial-gradient(circle at 40% 35%, #fff4d2, var(--chai) 55%, #b86a1c);
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: 0 0 16px rgba(233, 146, 59, 0.55);
+}
+.bulb-glow {
+  position: absolute;
+  left: 50%;
+  top: 52px;
+  width: 70px;
+  height: 70px;
+  margin-left: -35px;
+  background: radial-gradient(circle, rgba(233, 146, 59, 0.35), transparent 70%);
+  pointer-events: none;
+}
+@keyframes bulbSway {
+  0%, 100% { transform: rotate(-3.2deg); }
+  50% { transform: rotate(3.4deg); }
+}
+
+.dust-field {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.dust-mote {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(243, 234, 211, 0.45);
+  animation: dustDrift linear infinite;
+}
+@keyframes dustDrift {
+  0% { transform: translate3d(0, 8px, 0); opacity: 0; }
+  20% { opacity: 0.5; }
+  100% { transform: translate3d(18px, -70px, 0); opacity: 0; }
+}
+
+/* Paper board */
+.board {
+  transform-origin: center;
+  animation: paperShift 9s ease-in-out infinite;
+}
+@keyframes paperShift {
+  0%, 100% { transform: rotate(-0.6deg); }
+  50% { transform: rotate(0.55deg); }
+}
+
+/* SVG kettle steam */
+.steam-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.steam-path {
+  fill: none;
+  stroke: rgba(255, 244, 220, 0.45);
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: blur(1.5px);
+  stroke-dasharray: 8 18;
+  animation: steamDraw 2.8s linear infinite;
+}
+.steam-path.s2 {
+  animation-delay: 0.7s;
+  stroke: rgba(255, 255, 255, 0.28);
+}
+.steam-path.s3 {
+  animation-delay: 1.4s;
+}
+@keyframes steamDraw {
+  from { stroke-dashoffset: 40; opacity: 0.15; }
+  40% { opacity: 0.7; }
+  to { stroke-dashoffset: -40; opacity: 0; }
+}
+
+/* Kaka motion */
+.kaka-shell {
+  transform-origin: bottom right;
+}
+.typing-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.typing-dots {
+  display: inline-flex;
+  gap: 0.22rem;
+}
+.typing-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink);
+  display: block;
+  animation: typeBounce 1s ease-in-out infinite;
+}
+.typing-dots i:nth-child(2) { animation-delay: 0.15s; }
+.typing-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typeBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+
+.kaka-speech-bubble {
+  transform-origin: bottom center;
+}
+
+@media (max-width: 800px) {
+  .hanging-bulb {
+    left: auto;
+    right: 10%;
+    height: 64px;
+    z-index: 4;
+  }
+  .portrait-offset-shadow {
+    max-height: 48vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .hanging-bulb,
+  .dust-mote,
+  .board,
+  .portrait-entrance,
+  .steam-path,
+  .typing-dots i {
+    animation: none !important;
+  }
+  .char {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .shop.open .shutter {
+    transform: translateY(-100%);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: auto !important;
+  }
+}
